@@ -1,0 +1,30 @@
+.btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: var(--color-glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--color-glass-border);
+  border-radius: 40px;
+  color: var(--color-text-secondary);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  transition: all 0.2s ease;
+}
+
+.btn:hover {
+  border-color: rgba(78, 204, 163, 0.3);
+  color: var(--color-text-primary);
+}
+
+.btn.on {
+  border-color: rgba(78, 204, 163, 0.4);
+  color: var(--color-accent);
+  background: rgba(78, 204, 163, 0.08);
+}
+
+.label {
+  font-family: var(--font-ui);
+}

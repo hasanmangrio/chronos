@@ -1,0 +1,50 @@
+.container {
+  max-height: 180px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-right: 4px;
+  width: 100%;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(78, 204, 163, 0.25) transparent;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  font-size: 13px;
+  gap: 12px;
+}
+
+.num {
+  color: var(--color-text-muted);
+  min-width: 48px;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+}
+
+.time {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 300;
+  color: var(--color-text-primary);
+  flex: 1;
+}
+
+.delta {
+  font-size: 11px;
+  letter-spacing: 0.04em;
+}
+
+.faster {
+  color: var(--color-accent);
+}
+
+.slower {
+  color: var(--color-text-muted);
+}
