@@ -1,37 +1,27 @@
 import { useEffect, useRef } from 'react';
 import styles from './NatureBackground.module.css';
 
-interface Ripple {
-  x: number;
-  y: number;
-  radius: number;
-  maxRadius: number;
-  opacity: number;
-  speed: number;
-}
-
-interface Particle {
-  x: number;
-  y: number;
-  vx: number;
-  vy: number;
-  radius: number;
-  opacity: number;
-  life: number;
-  maxLife: number;
-  seed: number;
-}
-
-interface Caustic {
+interface Orb {
   cx: number;
   cy: number;
   radius: number;
-  a: number;
-  b: number;
-  freqA: number;
-  freqB: number;
-  delta: number;
-  speed: number;
+  r: number; g: number; b: number;
+  // Lissajous drift params
+  ax: number; ay: number;
+  fx: number; fy: number;
+  phaseX: number; phaseY: number;
+  // Breathe
+  breatheSpeed: number;
+  breathePhase: number;
+}
+
+interface Speck {
+  x: number; y: number;
+  vx: number; vy: number;
+  radius: number;
+  opacity: number;
+  life: number; maxLife: number;
+  seed: number;
 }
 
 export function NatureBackground() {
@@ -43,153 +33,128 @@ export function NatureBackground() {
 
     const ctx = canvas.getContext('2d')!;
     let rafId: number;
-
-    const ripples: Ripple[] = [];
-    const particles: Particle[] = [];
-    const caustics: Caustic[] = [];
-
     let width = 0;
     let height = 0;
     let dpr = 1;
 
-    function resize() {
-      const el = canvas!;
-      dpr = window.devicePixelRatio || 1;
-      width = el.clientWidth;
-      height = el.clientHeight;
-      el.width = width * dpr;
-      el.height = height * dpr;
-      ctx.scale(dpr, dpr);
-    }
+    // Headspace-style warm orb palette
+    const orbDefs = [
+      { r: 255, g: 107, b: 53,  baseRadius: 0.55, ax: 0.12, ay: 0.08, fx: 0.08, fy: 0.06 },  // orange
+      { r: 247, g: 201, b: 72,  baseRadius: 0.40, ax: 0.10, ay: 0.13, fx: 0.05, fy: 0.09 },  // yellow
+      { r: 220, g: 100, b: 190, baseRadius: 0.45, ax: 0.14, ay: 0.09, fx: 0.07, fy: 0.11 },  // pink/coral
+      { r: 100, g: 84,  b: 220, baseRadius: 0.50, ax: 0.09, ay: 0.14, fx: 0.10, fy: 0.07 },  // indigo
+      { r: 255, g: 140, b: 80,  baseRadius: 0.35, ax: 0.13, ay: 0.10, fx: 0.09, fy: 0.08 },  // peach
+    ];
 
-    function spawnRipple() {
-      ripples.push({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        radius: 0,
-        maxRadius: 60 + Math.random() * 160,
-        opacity: 1,
-        speed: 0.4 + Math.random() * 0.5,
+    const orbs: Orb[] = [];
+    const specks: Speck[] = [];
+
+    function initOrbs() {
+      orbs.length = 0;
+      orbDefs.forEach((def, i) => {
+        orbs.push({
+          cx: width * (0.2 + (i / (orbDefs.length - 1)) * 0.6),
+          cy: height * (0.2 + Math.random() * 0.6),
+          radius: Math.min(width, height) * def.baseRadius,
+          r: def.r, g: def.g, b: def.b,
+          ax: width * def.ax,
+          ay: height * def.ay,
+          fx: def.fx,
+          fy: def.fy,
+          phaseX: Math.random() * Math.PI * 2,
+          phaseY: Math.random() * Math.PI * 2,
+          breatheSpeed: 0.25 + Math.random() * 0.2,
+          breathePhase: Math.random() * Math.PI * 2,
+        });
       });
     }
 
-    function spawnParticle() {
-      particles.push({
+    function spawnSpeck() {
+      specks.push({
         x: Math.random() * width,
-        y: height * 0.4 + Math.random() * height * 0.6,
-        vx: 0,
-        vy: -(0.08 + Math.random() * 0.17),
-        radius: 0.8 + Math.random() * 2.2,
+        y: height * 0.3 + Math.random() * height * 0.7,
+        vx: (Math.random() - 0.5) * 0.15,
+        vy: -(0.05 + Math.random() * 0.12),
+        radius: 0.6 + Math.random() * 1.8,
         opacity: 0,
         life: 0,
-        maxLife: 3000 + Math.random() * 5000,
+        maxLife: 4000 + Math.random() * 6000,
         seed: Math.random() * 1000,
       });
     }
 
-    function initCaustics() {
-      for (let i = 0; i < 4; i++) {
-        caustics.push({
-          cx: width * (0.15 + Math.random() * 0.7),
-          cy: height * (0.15 + Math.random() * 0.7),
-          radius: 120 + Math.random() * 200,
-          a: 80 + Math.random() * 120,
-          b: 60 + Math.random() * 100,
-          freqA: 0.2 + Math.random() * 0.4,
-          freqB: 0.15 + Math.random() * 0.35,
-          delta: Math.random() * Math.PI * 2,
-          speed: 0.0002 + Math.random() * 0.0003,
-        });
-      }
+    function resize() {
+      dpr = window.devicePixelRatio || 1;
+      width = canvas!.clientWidth;
+      height = canvas!.clientHeight;
+      canvas!.width = width * dpr;
+      canvas!.height = height * dpr;
+      ctx.scale(dpr, dpr);
+      initOrbs();
     }
 
-    // Seed initial state
-    for (let i = 0; i < 60; i++) spawnParticle();
-    spawnRipple();
-    initCaustics();
-
-    let nextRippleAt = Date.now() + 1200 + Math.random() * 1800;
-    let lastParticleAt = 0;
+    for (let i = 0; i < 50; i++) spawnSpeck();
+    let lastSpeckAt = 0;
 
     function frame(timestamp: number) {
       const t = timestamp * 0.001;
       const now = Date.now();
 
-      // Gradient background
-      const hueShift = (Math.sin(t * 0.025) + 1) / 2; // 0..1
-      const midR = Math.round(13 + hueShift * 5);
-      const midG = Math.round(33 + hueShift * 12);
-      const midB = Math.round(55 - hueShift * 20);
-
-      const grad = ctx.createLinearGradient(0, 0, 0, height);
-      grad.addColorStop(0, '#0a1628');
-      grad.addColorStop(0.55, `rgb(${midR},${midG},${midB})`);
-      grad.addColorStop(1, '#071420');
-      ctx.fillStyle = grad;
+      // Deep warm-purple gradient base
+      const bg = ctx.createLinearGradient(0, 0, width * 0.6, height);
+      bg.addColorStop(0, '#160D35');
+      bg.addColorStop(0.5, '#1E1045');
+      bg.addColorStop(1, '#120A28');
+      ctx.fillStyle = bg;
       ctx.fillRect(0, 0, width, height);
 
-      // Caustic blobs
+      // Draw orbs with screen blend for luminous overlap
       ctx.save();
       ctx.globalCompositeOperation = 'screen';
-      for (const c of caustics) {
-        const x = c.cx + c.a * Math.sin(c.freqA * t + c.delta);
-        const y = c.cy + c.b * Math.sin(c.freqB * t);
-        const rg = ctx.createRadialGradient(x, y, 0, x, y, c.radius);
-        rg.addColorStop(0, 'rgba(78,204,163,0.045)');
-        rg.addColorStop(1, 'rgba(78,204,163,0)');
+
+      for (const orb of orbs) {
+        const breathe = 1 + 0.06 * Math.sin(t * orb.breatheSpeed + orb.breathePhase);
+        const x = orb.cx + orb.ax * Math.sin(orb.fx * t + orb.phaseX);
+        const y = orb.cy + orb.ay * Math.sin(orb.fy * t + orb.phaseY);
+        const r = orb.radius * breathe;
+
+        const rg = ctx.createRadialGradient(x, y, 0, x, y, r);
+        rg.addColorStop(0,   `rgba(${orb.r},${orb.g},${orb.b},0.22)`);
+        rg.addColorStop(0.4, `rgba(${orb.r},${orb.g},${orb.b},0.10)`);
+        rg.addColorStop(1,   `rgba(${orb.r},${orb.g},${orb.b},0)`);
+
         ctx.fillStyle = rg;
         ctx.beginPath();
-        ctx.arc(x, y, c.radius, 0, Math.PI * 2);
+        ctx.arc(x, y, r, 0, Math.PI * 2);
         ctx.fill();
       }
+
       ctx.restore();
 
-      // Ripples
-      if (now >= nextRippleAt) {
-        spawnRipple();
-        nextRippleAt = now + 1200 + Math.random() * 1800;
+      // Tiny warm specks drifting upward (firefly-like)
+      if (now - lastSpeckAt > 500) {
+        spawnSpeck();
+        lastSpeckAt = now;
       }
-      for (let i = ripples.length - 1; i >= 0; i--) {
-        const r = ripples[i];
-        r.radius += r.speed;
-        r.opacity = 1 - r.radius / r.maxRadius;
-        if (r.opacity <= 0) {
-          ripples.splice(i, 1);
-          continue;
-        }
-        ctx.beginPath();
-        ctx.arc(r.x, r.y, r.radius, 0, Math.PI * 2);
-        ctx.strokeStyle = `rgba(78,204,163,${r.opacity * 0.22})`;
-        ctx.lineWidth = 1;
-        ctx.stroke();
-      }
-
-      // Particles
-      if (now - lastParticleAt > 400) {
-        spawnParticle();
-        lastParticleAt = now;
-      }
-      const frameDeltaMs = 16; // ~60fps assumption for life tracking
-      for (let i = particles.length - 1; i >= 0; i--) {
-        const p = particles[i];
-        p.life += frameDeltaMs;
+      const dt = 16;
+      for (let i = specks.length - 1; i >= 0; i--) {
+        const p = specks[i];
+        p.life += dt;
         const progress = p.life / p.maxLife;
-        if (progress >= 1) {
-          particles.splice(i, 1);
-          continue;
-        }
-        // Fade in 10%, hold, fade out last 20%
-        if (progress < 0.1) p.opacity = progress / 0.1;
-        else if (progress > 0.8) p.opacity = (1 - progress) / 0.2;
+        if (progress >= 1) { specks.splice(i, 1); continue; }
+
+        if (progress < 0.12) p.opacity = progress / 0.12;
+        else if (progress > 0.75) p.opacity = (1 - progress) / 0.25;
         else p.opacity = 1;
 
-        p.x += p.vx + Math.sin(t * 0.8 + p.seed) * 0.12;
+        p.x += p.vx + Math.sin(t * 0.5 + p.seed) * 0.08;
         p.y += p.vy;
 
-        const alpha = p.opacity * (i % 3 === 0 ? 0.5 : 0.35);
-        const color = i % 5 === 0
-          ? `rgba(160,210,200,${alpha})`
-          : `rgba(78,204,163,${alpha})`;
+        const alpha = p.opacity * 0.55;
+        // Alternate between warm orange and soft gold specks
+        const color = i % 3 === 0
+          ? `rgba(247,201,72,${alpha})`
+          : `rgba(255,140,80,${alpha})`;
 
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
@@ -203,7 +168,6 @@ export function NatureBackground() {
     resize();
     const ro = new ResizeObserver(resize);
     ro.observe(canvas);
-
     rafId = requestAnimationFrame(frame);
 
     return () => {

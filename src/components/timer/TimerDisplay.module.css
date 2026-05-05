@@ -22,7 +22,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
   z-index: 1;
 }
 
@@ -30,7 +30,7 @@
   font-family: var(--font-display);
   font-size: clamp(3rem, 8vw, 4.5rem);
   font-weight: 300;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.02em;
   color: var(--color-text-primary);
   display: flex;
   align-items: baseline;
@@ -40,14 +40,15 @@
 .sep {
   color: var(--color-text-muted);
   font-size: 0.7em;
-  padding: 0 1px;
+  padding: 0 2px;
 }
 
 .doneLabel {
   font-size: 11px;
-  letter-spacing: 0.15em;
+  font-weight: 600;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--color-danger);
+  color: var(--color-accent);
 }
 
 .pulse {

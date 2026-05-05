@@ -1,20 +1,22 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@300;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600&display=swap');
 
 :root {
-  --color-bg-deep: #0a1628;
-  --color-accent: #4ecca3;
-  --color-accent-dim: rgba(78, 204, 163, 0.2);
-  --color-accent-glow: rgba(78, 204, 163, 0.35);
-  --color-text-primary: #e8f4f1;
-  --color-text-secondary: rgba(232, 244, 241, 0.55);
-  --color-text-muted: rgba(232, 244, 241, 0.3);
-  --color-glass-bg: rgba(255, 255, 255, 0.06);
-  --color-glass-border: rgba(255, 255, 255, 0.1);
-  --color-danger: #e07a5f;
-  --font-display: 'Cormorant Garamond', serif;
-  --font-ui: 'Inter', sans-serif;
-  --radius-card: 28px;
-  --radius-btn: 12px;
+  --color-bg: #160D35;
+  --color-bg-mid: #1E1045;
+  --color-accent: #FF6B35;
+  --color-accent-warm: #F7C948;
+  --color-accent-dim: rgba(255, 107, 53, 0.18);
+  --color-accent-glow: rgba(255, 107, 53, 0.4);
+  --color-text-primary: #FFF4E6;
+  --color-text-secondary: rgba(255, 244, 230, 0.65);
+  --color-text-muted: rgba(255, 244, 230, 0.35);
+  --color-glass-bg: rgba(255, 255, 255, 0.07);
+  --color-glass-border: rgba(255, 244, 230, 0.1);
+  --color-danger: #FF8A65;
+  --font-display: 'Nunito', sans-serif;
+  --font-ui: 'Nunito', sans-serif;
+  --radius-card: 32px;
+  --radius-btn: 100px;
 }
 
 *,
@@ -34,10 +36,10 @@ body,
 }
 
 body {
-  background: var(--color-bg-deep);
+  background: var(--color-bg);
   color: var(--color-text-primary);
   font-family: var(--font-ui);
-  font-weight: 300;
+  font-weight: 400;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -46,7 +48,7 @@ button {
   border: none;
   background: none;
   font-family: var(--font-ui);
-  font-weight: 300;
+  font-weight: 500;
   color: var(--color-text-primary);
 }
 
@@ -64,21 +66,21 @@ input {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(78, 204, 163, 0.25);
+  background: rgba(255, 107, 53, 0.25);
   border-radius: 2px;
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
+  from { opacity: 0; transform: translateY(12px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes pulse {
   0%, 100% { opacity: 1; }
-  50%       { opacity: 0.5; }
+  50%       { opacity: 0.45; }
 }
 
 @keyframes done-glow {
-  0%, 100% { filter: drop-shadow(0 0 0px rgba(78, 204, 163, 0)); }
-  50%       { filter: drop-shadow(0 0 24px rgba(78, 204, 163, 0.6)); }
+  0%, 100% { filter: drop-shadow(0 0 0px rgba(255, 107, 53, 0)); }
+  50%       { filter: drop-shadow(0 0 28px rgba(255, 107, 53, 0.7)); }
 }

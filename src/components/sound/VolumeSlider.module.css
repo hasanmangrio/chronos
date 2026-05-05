@@ -3,11 +3,11 @@
   align-items: center;
   gap: 8px;
   padding: 8px 16px;
-  background: var(--color-glass-bg);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--color-glass-border);
-  border-radius: 40px;
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 244, 230, 0.1);
+  border-radius: 100px;
   opacity: 0;
   pointer-events: none;
   transform: translateY(6px);
@@ -34,8 +34,8 @@
   outline: none;
   background: linear-gradient(
     to right,
-    var(--color-accent) 0%,
-    var(--color-accent) var(--fill),
+    #FF6B35 0%,
+    #FF6B35 var(--fill),
     rgba(255, 255, 255, 0.12) var(--fill),
     rgba(255, 255, 255, 0.12) 100%
   );
@@ -47,21 +47,21 @@
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  background: var(--color-accent);
-  box-shadow: 0 0 6px rgba(78, 204, 163, 0.5);
+  background: linear-gradient(135deg, #FF6B35, #F7C948);
+  box-shadow: 0 0 8px rgba(255, 107, 53, 0.55);
   cursor: pointer;
   transition: transform 0.15s ease;
 }
 
 .slider::-webkit-slider-thumb:hover {
-  transform: scale(1.2);
+  transform: scale(1.25);
 }
 
 .slider::-moz-range-thumb {
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  background: var(--color-accent);
+  background: linear-gradient(135deg, #FF6B35, #F7C948);
   border: none;
   cursor: pointer;
 }

@@ -20,6 +20,16 @@ export function TimerDisplay({ remaining, total, status }: Props) {
   return (
     <div className={`${styles.wrapper} ${isDone ? styles.done : ''}`}>
       <svg className={styles.ring} viewBox="0 0 290 290">
+        <defs>
+          <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#FF6B35" />
+            <stop offset="100%" stopColor="#F7C948" />
+          </linearGradient>
+          <linearGradient id="ringGradDone" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#FF8A65" />
+            <stop offset="100%" stopColor="#FFB347" />
+          </linearGradient>
+        </defs>
         {/* Track */}
         <circle
           cx="145" cy="145" r={RADIUS}
@@ -31,13 +41,13 @@ export function TimerDisplay({ remaining, total, status }: Props) {
         <circle
           cx="145" cy="145" r={RADIUS}
           fill="none"
-          stroke={isDone ? '#e07a5f' : '#4ecca3'}
-          strokeWidth="1.5"
+          stroke={isDone ? 'url(#ringGradDone)' : 'url(#ringGrad)'}
+          strokeWidth="3"
           strokeLinecap="round"
           strokeDasharray={CIRCUMFERENCE}
           strokeDashoffset={dashOffset}
           transform="rotate(-90 145 145)"
-          style={{ transition: 'stroke-dashoffset 0.15s linear, stroke 0.4s ease' }}
+          style={{ transition: 'stroke-dashoffset 0.15s linear' }}
         />
       </svg>
       <div className={`${styles.digits} ${isDone ? styles.pulse : ''}`}>
