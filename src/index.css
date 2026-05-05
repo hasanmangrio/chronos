@@ -1,21 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=VT323&family=Fredoka+One&family=Inter:wght@400;500;600&display=swap');
 
 :root {
-  --color-bg: #160D35;
-  --color-bg-mid: #1E1045;
-  --color-accent: #FF6B35;
-  --color-accent-warm: #F7C948;
-  --color-accent-dim: rgba(255, 107, 53, 0.18);
-  --color-accent-glow: rgba(255, 107, 53, 0.4);
-  --color-text-primary: #FFF4E6;
-  --color-text-secondary: rgba(255, 244, 230, 0.65);
-  --color-text-muted: rgba(255, 244, 230, 0.35);
-  --color-glass-bg: rgba(255, 255, 255, 0.07);
-  --color-glass-border: rgba(255, 244, 230, 0.1);
-  --color-danger: #FF8A65;
-  --font-display: 'Nunito', sans-serif;
-  --font-ui: 'Nunito', sans-serif;
-  --radius-card: 32px;
+  --color-bg: #0A1520;
+  --color-accent: #4CAF50;
+  --color-accent-warm: #A8E063;
+  --color-accent-dim: rgba(76, 175, 80, 0.2);
+  --color-text-primary: #E8F5E9;
+  --color-text-secondary: rgba(232, 245, 233, 0.65);
+  --color-text-muted: rgba(232, 245, 233, 0.35);
+  --color-glass-bg: rgba(5, 12, 4, 0.75);
+  --color-glass-border: rgba(76, 175, 80, 0.18);
+  --font-display: 'Fredoka One', 'Inter', sans-serif;
+  --font-timer: 'VT323', monospace;
+  --font-ui: 'Inter', sans-serif;
+  --radius-card: 28px;
   --radius-btn: 100px;
 }
 
@@ -66,7 +64,7 @@ input {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 107, 53, 0.25);
+  background: rgba(76, 175, 80, 0.3);
   border-radius: 2px;
 }
 
@@ -78,9 +76,4 @@ input {
 @keyframes pulse {
   0%, 100% { opacity: 1; }
   50%       { opacity: 0.45; }
-}
-
-@keyframes done-glow {
-  0%, 100% { filter: drop-shadow(0 0 0px rgba(255, 107, 53, 0)); }
-  50%       { filter: drop-shadow(0 0 28px rgba(255, 107, 53, 0.7)); }
 }

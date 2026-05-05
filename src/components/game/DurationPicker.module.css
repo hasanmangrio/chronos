@@ -1,0 +1,96 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.presets {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.pill {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 10px 6px;
+  border: 1.5px solid var(--color-glass-border);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--color-text-secondary);
+  transition: all 0.18s ease;
+  cursor: pointer;
+}
+
+.pill:hover {
+  border-color: rgba(76, 175, 80, 0.4);
+  background: rgba(76, 175, 80, 0.06);
+  color: var(--color-text-primary);
+}
+
+.pill.active {
+  background: linear-gradient(135deg, rgba(76, 175, 80, 0.25), rgba(139, 195, 74, 0.2));
+  border-color: rgba(76, 175, 80, 0.6);
+  color: #A8E063;
+  box-shadow: 0 0 12px rgba(76, 175, 80, 0.2);
+}
+
+.pillMain {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.pillSub {
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  opacity: 0.7;
+}
+
+.customRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.customInput {
+  width: 64px;
+  padding: 8px 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1.5px solid var(--color-glass-border);
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 500;
+  text-align: center;
+  color: var(--color-text-primary);
+  outline: none;
+  -moz-appearance: textfield;
+  transition: border-color 0.2s;
+}
+
+.customInput::-webkit-inner-spin-button,
+.customInput::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
+.customInput:focus,
+.customInput.activeInput {
+  border-color: rgba(76, 175, 80, 0.55);
+  background: rgba(76, 175, 80, 0.06);
+}
+
+.customLabel {
+  font-size: 13px;
+  color: var(--color-text-muted);
+}

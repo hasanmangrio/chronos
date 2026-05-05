@@ -1,0 +1,65 @@
+.wrapper {
+  position: fixed;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  background: rgba(8, 18, 5, 0.72);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(76, 175, 80, 0.18);
+  border-radius: 20px;
+  padding: 14px 28px 12px;
+  min-width: 200px;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.wrapper.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-50%) translateY(-8px);
+}
+
+.timerRow {
+  display: flex;
+  align-items: center;
+}
+
+.digits {
+  font-family: var(--font-timer);
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  color: #C8F0A0;
+  letter-spacing: 0.06em;
+}
+
+.sep {
+  color: rgba(200, 240, 160, 0.4);
+  padding: 0 2px;
+}
+
+.progressTrack {
+  width: 180px;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: linear-gradient(90deg, #4CAF50, #A8E063);
+  border-radius: 2px;
+  transition: width 0.5s linear;
+}
+
+.sub {
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  color: rgba(168, 224, 99, 0.55);
+  text-transform: capitalize;
+}
