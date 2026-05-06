@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=VT323&family=Fredoka+One&family=Inter:wght@400;500;600&display=swap');
+
+:root {
+  --color-bg: #0A1520;
+  --color-accent: #4CAF50;
+  --color-accent-warm: #A8E063;
+  --color-accent-dim: rgba(76, 175, 80, 0.2);
+  --color-text-primary: #E8F5E9;
+  --color-text-secondary: rgba(232, 245, 233, 0.65);
+  --color-text-muted: rgba(232, 245, 233, 0.35);
+  --color-glass-bg: rgba(5, 12, 4, 0.75);
+  --color-glass-border: rgba(76, 175, 80, 0.18);
+  --font-display: 'Fredoka One', 'Inter', sans-serif;
+  --font-timer: 'VT323', monospace;
+  --font-ui: 'Inter', sans-serif;
+  --radius-card: 28px;
+  --radius-btn: 100px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text-primary);
+  font-family: var(--font-ui);
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: var(--font-ui);
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+input {
+  font-family: var(--font-ui);
+  color: var(--color-text-primary);
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(76, 175, 80, 0.3);
+  border-radius: 2px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.45; }
+}
